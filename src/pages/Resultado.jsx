@@ -239,6 +239,7 @@ export default function Resultado() {
           <button className="res-btn-outline" onClick={() => navigate("/ejercicios")}>
             Ver ejercicios →
             </button>
+            <button className="res-btn-outline" onClick={() => navigate('/ejercicios-ia', { state: { areas, nombre, isKids } })}> Ejercicios personalizados →</button>
             <button className="res-btn-outline" onClick={() => navigate("/dashboard")}>
               Mi progreso →
             </button>
