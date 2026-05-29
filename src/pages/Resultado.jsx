@@ -218,7 +218,13 @@ export default function Resultado() {
           <button className="res-btn" onClick={() => navigate("/test")}>
             Hacer otro test
           </button>
-          <button className="res-btn-outline" onClick={() => navigate("/")}>
+          <button className="res-btn-outline" onClick={() => navigate("/ejercicios")}>
+            Ver ejercicios →
+            </button>
+            <button className="res-btn-outline" onClick={() => navigate("/dashboard")}>
+              Mi progreso →
+            </button>
+            <button className="res-btn-outline" onClick={() => navigate("/")}>
             Volver al inicio
           </button>
         </div>
