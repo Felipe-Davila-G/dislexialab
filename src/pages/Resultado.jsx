@@ -128,7 +128,7 @@ export default function Resultado() {
     );
   }
 
-  const { nombre, score, areas, avgTime, recomendaciones, perfilRiesgo } = state;
+  const { nombre, score, areas, avgTime, recomendaciones, perfilRiesgo, isKids } = state;
 
   const riskConfig = {
     bajo: { cls: "risk-low", icon: "🟢", label: "Riesgo bajo", desc: "No se detectaron indicadores significativos de dislexia.", scoreCls: "score-low", fillCls: "fill-low" },
