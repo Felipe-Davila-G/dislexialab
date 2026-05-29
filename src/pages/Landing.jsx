@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import { useAuth } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const styles = `
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap');
@@ -204,6 +206,8 @@ const styles = `
 
 export default function Landing() {
   const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate()
+  const { user, signOut } = useAuth()
   const [email, setEmail] = useState("");
   const fadeRefs = useRef([]);
 
@@ -238,7 +242,12 @@ export default function Landing() {
           <li><a onClick={() => scrollTo("pricing")}>Planes</a></li>
           <li><a onClick={() => scrollTo("about")}>Nosotros</a></li>
           <li><a onClick={() => scrollTo("contact")}>Contacto</a></li>
-          <li><a className="dl-nav-cta" onClick={() => setModalOpen(true)}>Comenzar gratis</a></li>
+          <li>
+            {user 
+              ? <a className="dl-nav-cta" onClick={signOut}>Cerrar sesión</a>
+              : <a className="dl-nav-cta" onClick={() => navigate('/login')}>Iniciar sesión</a>
+            }
+          </li>
         </ul>
       </nav>
 
@@ -308,7 +317,7 @@ export default function Landing() {
           <h2 className="dl-section-title">Adaptado para cada etapa de vida</h2>
           <p className="dl-section-sub">Ejercicios diseñados según la edad y el perfil del evaluado, con resultados comprensibles para padres y profesionales.</p>
           <div className="dl-audience-grid dl-fade" ref={addFade}>
-            <div className="dl-audience-card kids" onClick={() => setModalOpen(true)}>
+            <div className="dl-audience-card kids" onClick={() => navigate('/test')}>
               <div className="dl-aud-icon">🧒</div>
               <h3>Para niños</h3>
               <div className="dl-aud-tags">
@@ -319,7 +328,7 @@ export default function Landing() {
               <p>Evaluaciones gamificadas que los niños disfrutan sin sentirse evaluados. Diseñadas para detectar señales tempranas de forma natural.</p>
               <span className="dl-aud-link">Comenzar evaluación →</span>
             </div>
-            <div className="dl-audience-card adults" onClick={() => setModalOpen(true)}>
+            <div className="dl-audience-card adults" onClick={() => navigate('/test')}>
               <div className="dl-aud-icon">👤</div>
               <h3>Para adultos</h3>
               <div className="dl-aud-tags">
@@ -469,7 +478,7 @@ export default function Landing() {
       <div className="dl-cta">
         <h2>¿Listo para hacer la primera evaluación?</h2>
         <p>Es gratis, toma menos de 10 minutos y puede marcar una gran diferencia en el aprendizaje de tu hijo.</p>
-        <button className="dl-btn-white" onClick={() => setModalOpen(true)}>Comenzar evaluación gratis</button>
+        <button className="dl-btn-white" onClick={() => navigate('/test')}>Comenzar evaluación gratis</button>
       </div>
 
       {/* FOOTER */}
