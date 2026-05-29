@@ -276,7 +276,6 @@ export default function Landing() {
           <div className="dl-hero-visual">
             <div className="dl-blob dl-blob-green" />
             <div className="dl-blob dl-blob-warm" />
-            <div className="dl-float-badge">✨ Análisis con IA</div>
             <div className="dl-hero-card">
               <div className="dl-card-header">
                 <span className="dl-card-title">Resultado — Sofía M., 8 años</span>
