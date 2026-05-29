@@ -315,11 +315,11 @@ export default function Perfil() {
   };
 
   const navItems = [
-    { id:"dashboard", icon:<ChartBarIcon className="pf-nav-icon" style={{width:18,height:18}}/>, label:"Dashboard" },
-    { id:"historial", icon:<ClipboardDocumentListIcon className="pf-nav-icon" style={{width:18,height:18}}/>, label:"Historial" },
-    { id:"ejercicios", icon:<PuzzlePieceIcon className="pf-nav-icon" style={{width:18,height:18}}/>, label:"Ejercicios" },
-    { id:"perfil", icon:<UserIcon className="pf-nav-icon" style={{width:18,height:18}}/>, label:"Mi perfil" },
-    ];
+    { id:"dashboard", icon:"📊", label:"Dashboard" },
+    { id:"historial", icon:"📋", label:"Historial" },
+    { id:"ejercicios", icon:"🧩", label:"Ejercicios" },
+    { id:"perfil", icon:"👤", label:"Mi perfil" },
+  ];
 
   const sectionTitles = { dashboard:"Dashboard", historial:"Historial de tests", ejercicios:"Ejercicios de refuerzo", perfil:"Mi perfil" };
 
@@ -338,11 +338,11 @@ export default function Perfil() {
           ))}
           <div className="pf-nav-section" style={{marginTop:"16px"}}>Acciones</div>
           <div className="pf-nav-item" onClick={()=>navigate("/test")}>
-            <PlusCircleIcon style={{width:18,height:18,flexShrink:0}}/>
+            <span className="pf-nav-icon">➕</span>
             <span className="pf-nav-label">Nuevo test</span>
           </div>
           <div className="pf-nav-item" onClick={()=>navigate("/")}>
-            <HomeIcon style={{width:18,height:18,flexShrink:0}}/>
+            <span className="pf-nav-icon">🏠</span>
             <span className="pf-nav-label">Inicio</span>
           </div>
         </nav>
@@ -351,7 +351,7 @@ export default function Perfil() {
             <div className="pf-user-avatar">{user?.email?.[0]?.toUpperCase()||"U"}</div>
             <div className="pf-user-email">{user?.email}</div>
           </div>
-          <div className="pf-signout" onClick={signOut}><ArrowLeftOnRectangleIcon style={{width:16,height:16}}/> Cerrar sesión</div>
+          <div className="pf-signout" onClick={signOut}>⬅ Cerrar sesión</div>
         </div>
       </aside>
 
@@ -372,7 +372,7 @@ export default function Perfil() {
             loading ? <div className="pf-spinner"/> :
             total===0 ? (
               <div className="pf-empty">
-                <div className="pf-empty-icon"><PuzzlePieceIcon style={{width:40,height:40,color:"#2D6A4F",margin:"0 auto 12px"}}/></div>
+                <div className="pf-empty-icon">🧩</div>
                 <h3>Aún no tienes evaluaciones</h3>
                 <p>Realiza tu primer test para ver tu progreso aquí.</p>
                 <button className="pf-btn" onClick={()=>navigate("/test")}>Hacer primer test →</button>
@@ -442,7 +442,7 @@ export default function Perfil() {
             loading ? <div className="pf-spinner"/> :
             total===0 ? (
               <div className="pf-empty">
-                <div className="pf-empty-icon"><ClipboardDocumentListIcon style={{width:40,height:40,color:"#2D6A4F",margin:"0 auto 12px"}}/></div>
+                <div className="pf-empty-icon">📋</div>
                 <h3>Sin historial aún</h3>
                 <p>Haz tu primer test para ver los resultados aquí.</p>
                 <button className="pf-btn" onClick={()=>navigate("/test")}>Hacer test →</button>
@@ -479,14 +479,8 @@ export default function Perfil() {
           {/* ── EJERCICIOS ── */}
           {section==="ejercicios" && (<>
             <div style={{display:"flex",gap:"8px",marginBottom:"20px",flexWrap:"wrap"}}>
-                {[
-                    ["letras", <LetterCaseIcon style={{width:14,height:14,display:"inline",marginRight:"6px"}}/>, "Letras"],
-                    ["lectura", <BookOpenIcon style={{width:14,height:14,display:"inline",marginRight:"6px"}}/>, "Lectura"],
-                    ["memoria", <BrainIcon style={{width:14,height:14,display:"inline",marginRight:"6px"}}/>, "Memoria"],
-                ].map(([k, icon, l])=>(
-                    <button key={k} onClick={()=>setEjTab(k)} style={{padding:"8px 18px",borderRadius:"40px",fontSize:"13px",fontWeight:"500",fontFamily:"'DM Sans',sans-serif",cursor:"pointer",border:`1.5px solid ${ejTab===k?"#1C1917":"#EDE5D8"}`,background:ejTab===k?"#1C1917":"white",color:ejTab===k?"white":"#78716C",transition:"all .2s",display:"flex",alignItems:"center"}}>
-                        {icon}{l}
-                    </button>
+                {[["letras","🔤 Letras"],["lectura","📖 Lectura"],["memoria","🧠 Memoria"]].map(([k,l])=>(
+                  <button key={k} onClick={()=>setEjTab(k)} style={{padding:"8px 18px",borderRadius:"40px",fontSize:"13px",fontWeight:"500",fontFamily:"'DM Sans',sans-serif",cursor:"pointer",border:`1.5px solid ${ejTab===k?"#1C1917":"#EDE5D8"}`,background:ejTab===k?"#1C1917":"white",color:ejTab===k?"white":"#78716C",transition:"all .2s"}}>{l}</button>
                 ))}
             </div>
             <div className="pf-score-wrap">
