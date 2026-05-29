@@ -5,6 +5,8 @@ import Test from './pages/Test'
 import Resultado from './pages/Resultado'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Dashboard from './pages/Dashboard'
+import Ejercicios from './pages/Ejercicios'
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Route path="/resultado" element={<Resultado />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/ejercicios" element={<Ejercicios />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
