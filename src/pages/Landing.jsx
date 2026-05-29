@@ -242,10 +242,12 @@ export default function Landing() {
           <li><a onClick={() => scrollTo("pricing")}>Planes</a></li>
           <li><a onClick={() => scrollTo("about")}>Nosotros</a></li>
           <li><a onClick={() => scrollTo("contact")}>Contacto</a></li>
+          <li><a onClick={() => navigate('/perfil')}>Mi progreso</a></li>
           <li>
             {user 
               ? <a className="dl-nav-cta" onClick={signOut}>Cerrar sesión</a>
               : <a className="dl-nav-cta" onClick={() => navigate('/login')}>Iniciar sesión</a>
+              
             }
           </li>
         </ul>

@@ -224,6 +224,9 @@ export default function Resultado() {
             <button className="res-btn-outline" onClick={() => navigate("/dashboard")}>
               Mi progreso →
             </button>
+            <button className="res-btn-outline" onClick={() => navigate("/perfil")}>
+              Ver mi perfil →
+              </button>
             <button className="res-btn-outline" onClick={() => navigate("/")}>
             Volver al inicio
           </button>

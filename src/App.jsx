@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import Ejercicios from './pages/Ejercicios'
+import Perfil from './pages/Perfil'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/registro" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/ejercicios" element={<Ejercicios />} />
+          <Route path="/perfil" element={<Perfil />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
