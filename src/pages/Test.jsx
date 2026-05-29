@@ -418,44 +418,50 @@ export default function Test() {
     const perfil = score >= 80 ? "bajo" : score >= 50 ? "moderado" : "alto";
     const audiencia = isKids ? `un niño de ${edad || "entre 6 y 12"} años` : `un adulto de ${edad || "más de 13"} años`;
 
-    const prompt = `Eres un especialista en dislexia. El paciente se llama ${nombre} y es ${audiencia}. Completó un test de cribado con estos resultados: ${score}% de respuestas correctas, tiempo promedio por pregunta: ${avgTime} segundos. Áreas: Conciencia fonológica: ${areas.fonologica}%, Inversión de letras: ${areas.letras}%, Memoria secuencial: ${areas.secuencial}%, Velocidad lectora: ${areas.lectora}%. Da un análisis en 3 oraciones: nivel de riesgo, área más afectada, y una recomendación concreta. Si es niño, dirige la recomendación a los padres o docentes. Si es adulto, dirige la recomendación directamente a la persona. Responde en español, de forma empática y clara.`;
+    const prompt = `Eres un especialista en dislexia. El paciente se llama ${nombre} y es ${audiencia}. Completó un test de cribado con estos resultados: ${score}% de respuestas correctas, tiempo promedio por pregunta: ${avgTime} segundos. Áreas: Conciencia fonológica: ${areas.fonologica}%, Inversión de letras: ${areas.letras}%, Memoria secuencial: ${areas.secuencial}%, Velocidad lectora: ${areas.lectora}%. Da un análisis en 3 oraciones: nivel de riesgo, área más afectada, y una recomendación concreta. Responde en español, de forma empática y clara.`;
+
+    let recomendaciones = "Inicia sesión para ver el análisis completo con IA.";
 
     try {
-      const { data: patient } = await supabase
-        .from("patients")
-        .insert({ nombre, edad: parseInt(edad) || null })
-        .select()
-        .single();
-
-      const { data: session } = await supabase
-        .from("test_sessions")
-        .insert({ patient_id: patient.id, respuestas: allAnswers, tiempos: responseTimes, score })
-        .select()
-        .single();
-
       const aiRes = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
       });
-
       const aiData = await aiRes.json();
-      const recomendaciones = aiData.content?.[0]?.text || "No se pudo generar el análisis.";
-
-      await supabase.from("ai_reports").insert({
-        session_id: session.id,
-        perfil_riesgo: perfil,
-        recomendaciones,
-        areas,
-      });
-
-      navigate("/resultado", { state: { nombre, score, areas, avgTime, recomendaciones, perfilRiesgo: perfil, isKids } });
+      recomendaciones = aiData.content?.[0]?.text || recomendaciones;
     } catch (err) {
       console.error(err);
-      navigate("/resultado", {
-        state: { nombre, score, areas, avgTime, recomendaciones: "Verifica la configuración de Supabase y la API key.", perfilRiesgo: perfil, isKids },
-      });
     }
+
+    // Intentar guardar si hay sesión activa
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: patient } = await supabase
+          .from("patients")
+          .insert({ nombre, edad: parseInt(edad) || null, user_id: user.id })
+          .select().single();
+
+        const { data: session } = await supabase
+          .from("test_sessions")
+          .insert({ patient_id: patient.id, respuestas: allAnswers, tiempos: responseTimes, score })
+          .select().single();
+
+        await supabase.from("ai_reports").insert({
+          session_id: session.id,
+          perfil_riesgo: perfil,
+          recomendaciones,
+          areas,
+        });
+      }
+    } catch (err) {
+      console.error("Error guardando:", err);
+    }
+
+    navigate("/resultado", {
+      state: { nombre, score, areas, avgTime, recomendaciones, perfilRiesgo: perfil, isKids },
+    });
   };
 
   const q = questions[currentQ];

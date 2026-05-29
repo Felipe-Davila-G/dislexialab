@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from '../context/AuthContext'
 
 const styles = `
 .res-wrap { font-family: 'DM Sans', sans-serif; min-height: 100vh; background: #FAFAF7; color: #1C1917; }
@@ -95,6 +96,7 @@ export default function Resultado() {
   const location = useLocation();
   const navigate = useNavigate();
   const state = location.state;
+  const { user } = useAuth()
 
   useEffect(() => {
     const style = document.createElement("style");
@@ -205,13 +207,29 @@ export default function Resultado() {
         </div>
 
         {/* UPGRADE */}
-        <div className="upgrade-banner">
-          <div className="upgrade-text">
-            <h4>Obtén el reporte PDF completo</h4>
-            <p>Historial de progreso, ejercicios personalizados y más con Pro Familia.</p>
+        {!user && (
+          <div className="upgrade-banner">
+            <div className="upgrade-text">
+              <h4>💾 Guarda tu resultado</h4>
+              <p>Crea una cuenta gratis para guardar tu historial y ver tu progreso.</p>
+            </div>
+            <button className="upgrade-btn" onClick={() => navigate('/registro')}>
+              Crear cuenta gratis →
+            </button>
           </div>
-          <button className="upgrade-btn" onClick={() => navigate("/#pricing")}>Ver planes →</button>
-        </div>
+        )}
+
+        {user && (
+          <div className="upgrade-banner">
+            <div className="upgrade-text">
+              <h4>✓ Resultado guardado</h4>
+              <p>Puedes ver tu historial y progreso en tu perfil.</p>
+            </div>
+            <button className="upgrade-btn" onClick={() => navigate('/perfil')}>
+              Ver mi perfil →
+            </button>
+          </div>
+        )}
 
         {/* ACTIONS */}
         <div className="res-actions">

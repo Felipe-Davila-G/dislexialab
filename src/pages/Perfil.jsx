@@ -232,7 +232,8 @@ export default function Perfil() {
   }, [ejTab]);
 
   const fetchData = async () => {
-    const { data: patients } = await supabase.from("patients").select("id,nombre,edad,created_at");
+    const { data: { user: authUser } } = await supabase.auth.getUser()
+    const { data: patients } = await supabase.from("patients").select("id,nombre,edad,created_at").eq("user_id", authUser.id);
     if (!patients?.length) { setLoading(false); return; }
     const ids = patients.map(p=>p.id);
     const { data: ts } = await supabase.from("test_sessions").select("id,patient_id,score,fecha").in("patient_id",ids).order("fecha",{ascending:false});
