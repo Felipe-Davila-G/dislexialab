@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import Ejercicios from './pages/Ejercicios'
+import EjerciciosIA from './pages/EjerciciosIA'
 import Perfil from './pages/Perfil'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/registro" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/ejercicios" element={<Ejercicios />} />
+          <Route path="/ejercicios-ia" element={<EjerciciosIA />} />
           <Route path="/perfil" element={<Perfil />} />
         </Routes>
       </BrowserRouter>
